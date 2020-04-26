@@ -30,7 +30,7 @@ public:
 
     // Здесь как обычно
      Stack(Stack&& moveStack) noexcept;
-    // Stack& operator=(Stack&& moveStack) noexcept;
+     Stack& operator=(Stack&& moveStack) noexcept;
 
     ~Stack();
 
