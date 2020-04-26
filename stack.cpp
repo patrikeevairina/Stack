@@ -12,6 +12,7 @@ Stack::Stack(StackContainer container)
     {
     case StackContainer::List: {
         _pimpl = new ListStack();
+        break;
     }
     case StackContainer::Vector: {
         _pimpl = new VectorStack();
@@ -90,8 +91,23 @@ Stack::Stack(Stack&& moveStack) noexcept
     _containerType = moveStack._containerType;
     delete _pimpl;
     _pimpl = moveStack._pimpl;
-    
+
     moveStack._pimpl = nullptr;
+}
+
+Stack& Stack::operator=(Stack &&moveStack) noexcept
+{
+    if (this == &moveStack)
+    {
+        return *this;
+    }
+    delete _pimpl;
+    _containerType = moveStack._containerType;
+    _pimpl = moveStack._pimpl;
+
+    moveStack._pimpl = nullptr;
+
+    return *this;
 }
 
 Stack::~Stack()
