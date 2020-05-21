@@ -1,13 +1,13 @@
 #pragma once
 
 #include "StackImplementation.h"
+#include "LinkedList.h"
 
-#include "C:/Programming/lab_LinkedList/LinkedList.h"
-
-class ListStack : public StackImplementation, public LinkedList
+template <typename ValueType>
+class ListStack : public StackImplementation<ValueType>, public LinkedList<ValueType>
 {
 public:
-    ListStack() { std::cout << "creating list" << std::endl;};
+    ListStack() {};
     ListStack(const ListStack &copyList);
     void push(const ValueType &value) override;
     void pop() override;
@@ -16,6 +16,48 @@ public:
     bool isEmpty() const override;
     size_t size() const override;
 
-    ~ListStack(){ /*std::cout << "remove list" << std::endl; */};
+    ~ListStack(){};
 };
 
+template <typename ValueType>
+ListStack<ValueType>::ListStack(const ListStack &copy) : LinkedList<ValueType>(copy) {}
+
+
+template <typename ValueType>
+void ListStack<ValueType>::push(const ValueType &value)
+{
+    this->pushFront(value);
+}
+
+template <typename ValueType>
+void ListStack<ValueType>::pop()
+{
+    this->removeFront();
+}
+
+template <typename ValueType>
+ValueType& ListStack<ValueType>::top()
+{
+    return (*this)[0];
+}
+
+template <typename ValueType>
+const ValueType& ListStack<ValueType>::top() const
+{
+    return (*this)[0];
+}
+
+template <typename ValueType>
+bool ListStack<ValueType>::isEmpty() const
+{
+    if (size() == 0)
+        return true;
+    else
+        return false;
+}
+
+template <typename ValueType>
+size_t ListStack<ValueType>::size() const
+{
+    return this->LinkedList<ValueType>::size();
+}
