@@ -1,9 +1,8 @@
 #pragma once
 #include <iostream>
 
-using ValueType = double;
-
 // интерфейс для конкретных реализаций контейнера для стека
+template <typename ValueType>
 class StackImplementation {
 public:
     // добавление в хвост
@@ -18,5 +17,5 @@ public:
     // размер
     virtual size_t size() const = 0;
     // виртуальный деструктор
-    virtual ~StackImplementation() { /*std::cout << " remove stack_imp" << std::endl; */ };
+    virtual ~StackImplementation() {};
 };
