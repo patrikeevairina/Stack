@@ -11,6 +11,8 @@ enum QueueContainer
     List,
 };
 
+//class QueueImplementation;
+
 template <typename ValueType>
 class Queue
 {
@@ -78,17 +80,17 @@ Queue<ValueType>::Queue(const ValueType* valueArray, const size_t arraySize, Que
 }
 
 template <typename ValueType>
-Queue<ValueType>::Queue(const Queue& copyStack)
+Queue<ValueType>::Queue(const Queue& copyQueue)
 {
-    _containerType = copyStack._containerType;
+    _containerType = copyQueue._containerType;
     switch (_containerType)
     {
     case QueueContainer::List: {
-        _pimpl = new ListQueue<ValueType>(*(static_cast<ListQueue<ValueType>*>(copyStack._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
+        _pimpl = new ListQueue<ValueType>(*(static_cast<ListQueue<ValueType>*>(copyQueue._pimpl)));	
         break;
     }
     case QueueContainer::Vector: {
-        _pimpl = new VectorQueue<ValueType>(*(static_cast<VectorQueue<ValueType>*>(copyStack._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
+        _pimpl = new VectorQueue<ValueType>(*(static_cast<VectorQueue<ValueType>*>(copyQueue._pimpl)));	
         break;
     }
     default:
@@ -97,20 +99,20 @@ Queue<ValueType>::Queue(const Queue& copyStack)
 }
 
 template <typename ValueType>
-Queue<ValueType>& Queue<ValueType>::operator=(const Queue& copyStack)
+Queue<ValueType>& Queue<ValueType>::operator=(const Queue& copyQueue)
 {
-    if (this == &copyStack)
+    if (this == &copyQueue)
         return *this;
-    _containerType = copyStack._containerType;
+    _containerType = copyQueue._containerType;
     delete _pimpl;
     switch (_containerType)
     {
     case QueueContainer::List: {
-        _pimpl = new ListQueue<ValueType>(*(static_cast<ListQueue<ValueType>*>(copyStack._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
+        _pimpl = new ListQueue<ValueType>(*(static_cast<ListQueue<ValueType>*>(copyQueue._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
         break;
     }
     case QueueContainer::Vector: {
-        _pimpl = new VectorQueue<ValueType>(*(static_cast<VectorQueue<ValueType>*>(copyStack._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
+        _pimpl = new VectorQueue<ValueType>(*(static_cast<VectorQueue<ValueType>*>(copyQueue._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
         break;
     }
     default:
@@ -118,32 +120,6 @@ Queue<ValueType>& Queue<ValueType>::operator=(const Queue& copyStack)
     }
     return *this;
 }
-
-//template <typename ValueType>
-//Queue<ValueType>::Queue(Stack&& moveStack) noexcept
-//{
-//    _containerType = moveStack._containerType;
-//    delete _pimpl;
-//    _pimpl = moveStack._pimpl;
-
-//    moveStack._pimpl = nullptr;
-//}
-
-//template <typename ValueType>
-//Stack<ValueType>& Stack<ValueType>::operator=(Stack &&moveStack) noexcept
-//{
-//    if (this == &moveStack)
-//    {
-//        return *this;
-//    }
-//    delete _pimpl;
-//    _containerType = moveStack._containerType;
-//    _pimpl = moveStack._pimpl;
-
-//    moveStack._pimpl = nullptr;
-
-//    return *this;
-//}
 
 template <typename ValueType>
 Queue<ValueType>::~Queue()
