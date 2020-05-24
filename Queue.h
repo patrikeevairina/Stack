@@ -1,6 +1,7 @@
 #include <iostream>
 #include "listqueue.h"
 #include "vectorqueue.h"
+#include "doublelistqueue.h"
 #include "QueueImplementation.h"
 
 #pragma once
@@ -8,7 +9,8 @@
 enum QueueContainer
 {
     Vector = 0,
-    List,
+    SingleList,
+    DoubleList,
 };
 
 //class QueueImplementation;
@@ -17,9 +19,9 @@ template <typename ValueType>
 class Queue
 {
 public:
-    Queue(QueueContainer container = QueueContainer::List);
+    Queue(QueueContainer container = QueueContainer::DoubleList);
     Queue(const ValueType *valueArray, const size_t arraySize,
-          QueueContainer container = QueueContainer::List);
+          QueueContainer container = QueueContainer::DoubleList);
     explicit Queue(const Queue& copyQueue);
     Queue& operator=(const Queue& copyQueue);
 
@@ -42,7 +44,7 @@ Queue<ValueType>::Queue(QueueContainer container)
 {
     switch (container)
     {
-    case QueueContainer::List: {
+    case QueueContainer::SingleList: {
         _pimpl = new ListQueue<ValueType>();
         break;
     }
@@ -50,8 +52,12 @@ Queue<ValueType>::Queue(QueueContainer container)
         _pimpl = new VectorQueue<ValueType>();
         break;
     }
+    case QueueContainer::DoubleList: {
+        _pimpl = new DoubleListQueue<ValueType>();
+        break;
+    }
     default:
-        throw std::runtime_error("Неизвестный тип контейнера");
+        throw std::runtime_error("Неизвестный тип контейнера!");
     }
   //  std::cout << this->size() << " size " << std::endl;
 }
@@ -62,12 +68,16 @@ Queue<ValueType>::Queue(const ValueType* valueArray, const size_t arraySize, Que
 {
     switch (container)
     {
-    case QueueContainer::List: {
+    case QueueContainer::SingleList: {
         _pimpl = new ListQueue<ValueType>();
         break;
     }
     case QueueContainer::Vector: {
         _pimpl = new VectorQueue<ValueType>();
+        break;
+    }
+    case QueueContainer::DoubleList: {
+        _pimpl = new DoubleListQueue<ValueType>();
         break;
     }
     default:
@@ -85,12 +95,16 @@ Queue<ValueType>::Queue(const Queue& copyQueue)
     _containerType = copyQueue._containerType;
     switch (_containerType)
     {
-    case QueueContainer::List: {
-        _pimpl = new ListQueue<ValueType>(*(static_cast<ListQueue<ValueType>*>(copyQueue._pimpl)));	
+    case QueueContainer::SingleList: {
+        _pimpl = new ListQueue<ValueType>(*(static_cast<ListQueue<ValueType>*>(copyQueue._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
         break;
     }
     case QueueContainer::Vector: {
-        _pimpl = new VectorQueue<ValueType>(*(static_cast<VectorQueue<ValueType>*>(copyQueue._pimpl)));	
+        _pimpl = new VectorQueue<ValueType>(*(static_cast<VectorQueue<ValueType>*>(copyQueue._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
+        break;
+    }
+    case QueueContainer::DoubleList: {
+        _pimpl = new DoubleListQueue<ValueType>(*(static_cast<DoubleListQueue<ValueType>*>(copyQueue._pimpl)));
         break;
     }
     default:
@@ -107,12 +121,16 @@ Queue<ValueType>& Queue<ValueType>::operator=(const Queue& copyQueue)
     delete _pimpl;
     switch (_containerType)
     {
-    case QueueContainer::List: {
+    case QueueContainer::SingleList: {
         _pimpl = new ListQueue<ValueType>(*(static_cast<ListQueue<ValueType>*>(copyQueue._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
         break;
     }
     case QueueContainer::Vector: {
         _pimpl = new VectorQueue<ValueType>(*(static_cast<VectorQueue<ValueType>*>(copyQueue._pimpl)));	// конкретизируйте под ваши конструкторы, если надо
+        break;
+    }
+    case QueueContainer::DoubleList: {
+        _pimpl = new DoubleListQueue<ValueType>(*(static_cast<DoubleListQueue<ValueType>*>(copyQueue._pimpl)));
         break;
     }
     default:
