@@ -7,7 +7,7 @@ template <typename ValueType>
 class ListQueue : public QueueImplementation<ValueType>, public LinkedList<ValueType>
 {
 public:
-    ListQueue(){};
+    ListQueue(){}
     ListQueue(const ListQueue& copyList);
     void enqueue(const ValueType& value) override;
     void dequeue() override;
@@ -15,7 +15,7 @@ public:
     const ValueType& front() const override;
     bool isEmpty() const override;
     size_t size() const override;
-    ~ListQueue(){};
+    ~ListQueue(){}
 };
 
 template <typename ValueType>
