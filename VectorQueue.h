@@ -7,7 +7,7 @@ template <typename ValueType>
 class VectorQueue : public QueueImplementation<ValueType>, public MyVector<ValueType>
 {
 public:
-    VectorQueue(){};
+    VectorQueue(){}
     VectorQueue(const VectorQueue& copyVector);
     void enqueue(const ValueType& value) override;
     void dequeue() override;
@@ -15,7 +15,7 @@ public:
     const ValueType& front() const override;
     bool isEmpty() const override;
     size_t size() const override;
-    ~VectorQueue(){};
+    ~VectorQueue(){}
 };
 
 template <typename ValueType>
