@@ -1,6 +1,6 @@
 #include <iostream>
-#include "liststack.h"
-#include "vectorstack.h"
+#include "ListStack.h"
+#include "VectorStack.h"
 #include "StackImplementation.h"
 
 #pragma once
